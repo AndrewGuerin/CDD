@@ -15,11 +15,17 @@ class RunnableDemo implements Runnable {
    RunnableDemo( String name) {
       threadName = name;
       System.out.println("Creating " +  threadName );
+      /**
+       * Prints out creating message
+       */
    }
    
    @Override
    public void run() {
       System.out.println("Running " +  threadName );
+      /**
+       * Prints out running message and thread name
+       */
       try {
          for(int i = 4; i > 0; i--) {
             System.out.println("Thread: " + threadName + ", " + i);
@@ -28,8 +34,14 @@ class RunnableDemo implements Runnable {
          }
       } catch (InterruptedException e) {
          System.out.println("Thread " +  threadName + " interrupted.");
+         /**
+          * Prints out thread has been interupted
+          */
       }
       System.out.println("Thread " +  threadName + " exiting.");
+      /**
+       * Prints out exiting thread message
+       */
    }
    
    public void start () {

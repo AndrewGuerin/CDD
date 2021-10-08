@@ -51,6 +51,9 @@ class ThreadDemo extends Thread {
    @Override
    public void start () {
       System.out.println("Starting " +  threadName );
+      /**
+       * Prints starting message
+       */
       if (t == null) {
          t = new Thread (this, threadName);
          t.start ();

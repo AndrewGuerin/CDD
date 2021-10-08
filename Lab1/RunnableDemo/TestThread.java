@@ -14,6 +14,10 @@ public class TestThread {
         R1.start();
         RunnableDemo R2 = new RunnableDemo( "Thread-2");
         R2.start();
+
+        /**
+         * Creates two instances of threads and initalises them
+         */
     }   
     
 }
