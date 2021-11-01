@@ -41,5 +41,29 @@ public class CyclicBarrierDemo {
             }
         }
     }
+
+    class AggregatorThread implements Runnable {
+
+        @Override
+        public void run() {
+
+            String thisThreadName = Thread.currentThread().getName();
+
+            System.out.println(
+                    thisThreadName + ": Computing sum of " + workerCount + " workers, having " + semiCompleteResults + " results each.");
+            int sum = 0;
+
+            for (List<Integer> threadResult : partialResults) {
+                System.out.print("Adding ");
+                for (Integer partialResult : threadResult) {
+                    System.out.print(partialResult+" ");
+                    sum += partialResult;
+                }
+                System.out.println();
+            }
+            System.out.println(thisThreadName + ": Final result = " + sum);
+        }
+    }
+
 }
 
