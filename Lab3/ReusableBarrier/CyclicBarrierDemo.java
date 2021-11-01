@@ -65,5 +65,26 @@ public class CyclicBarrierDemo {
         }
     }
 
+    public void runCalculation(int numWorkers, int numberOfSemiCompleteResults) {
+        semiCompleteResults = numberOfSemiCompleteResults;
+        workerCount = numWorkers;
+
+        cyclicBarrier = new CyclicBarrier(workerCount, new AggregatorThread());
+
+        System.out.println("Creating " + workerCount
+                + " worker threads to compute "
+                + semiCompleteResults + " partial results each");
+
+        for (int i = 0; i < workerCount; i++) {
+            Thread worker = new Thread(new CalculatingThread());
+            worker.setName("Thread " + i);
+            worker.start();
+        }
+    }
+
+    public static void main(String[] args) {
+        CyclicBarrierDemo demo = new CyclicBarrierDemo();
+        demo.runCalculation(3, 2);
+    }
 }
 
