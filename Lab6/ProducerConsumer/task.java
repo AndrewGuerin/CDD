@@ -12,6 +12,7 @@ public class task {
     static Semaphore producerSemaphore = new Semaphore(1);
     static Semaphore consumerSemaphore = new Semaphore(0);
 
+
     void putItemInBuffer(int item)
     {
         try {
@@ -40,41 +41,3 @@ public class task {
     }
 }
 
-class Consumer implements Runnable {
-    task task;
-    Consumer(task task)
-    {
-        this.task = task;
-        new Thread(this, "Consumer").start();
-    }
-
-    public void run()
-    {
-        for (int index = 0; index < 3; index++)
-            task.getItemFromBuffer();
-    }
-}
-
-class Producer implements Runnable {
-    task task;
-    Producer(task task)
-    {
-        this.task = task;
-        new Thread(this, "Producer").start();
-    }
-
-    public void run()
-    {
-        for (int index = 0; index < 3; index++)
-            task.putItemInBuffer(index);
-    }
-}
-
-class Main {
-    public static void main(String args[])
-    {
-        task task = new task();
-        new Producer(task);
-        new Consumer(task);
-    }
-}
