@@ -1,5 +1,11 @@
 package Lab6.ProducerConsumer;
+/**
+ * Author: Andrew Guerin
+ */
 
+/**
+ * Consumer Class
+ */
 public class Consumer implements Runnable {
     task task;
 
