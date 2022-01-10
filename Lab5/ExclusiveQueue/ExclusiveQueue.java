@@ -25,6 +25,15 @@ public class ExclusiveQueue {
             /**
              * Leader Section
              */
+
+            /**
+             * When leader arrives it gets the mutex that protects leaders and
+             * followers. If there is a follower waiting, the leader decrements followers,
+             * signals a follower, and then invokes dance, all before releasing mutex
+             *
+             * If there are no followers waiting, the leader has to give up the mutex before
+             * waiting on leaderQueue.
+             */
             executor.submit(() -> {
                 mutex.acquireUninterruptibly();
                 if (followers > 0) {
@@ -44,6 +53,12 @@ public class ExclusiveQueue {
             /**
              * Follower Section
              */
+
+            /**
+             * When a follower arrives, it checks for a waiting leader. If there is one, the
+             * follower decrements leaders, signals a leader, and executes dance, all without
+             * releasing mutex.
+             */
             executor.submit(() -> {
                 mutex.acquireUninterruptibly();
                 if (leaders > 0) {
@@ -62,6 +77,9 @@ public class ExclusiveQueue {
 
     }
 
+    /**
+     *  Dance method
+     */
     private void dance(String type) {
         System.out.println("Generated " + type);
     }
