@@ -5,14 +5,13 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
 
-public class CyclicBarrierDemo {
-        private CyclicBarrier cyclicBarrier;
+public class CyclicBarrier {
+        private java.util.concurrent.CyclicBarrier cyclicBarrier;
         private List<List<Integer>> partialResults
                 = Collections.synchronizedList(new ArrayList<>());
         private Random random = new Random();
-        private int semiCompleteResults;
+        private int partResults;
         private int workerCount;
 
 
@@ -23,8 +22,10 @@ public class CyclicBarrierDemo {
             String thisThreadName = Thread.currentThread().getName();
             List<Integer> partialResult = new ArrayList<>();
 
-            // store semi complete results
-            for (int i = 0; i < semiCompleteResults; i++) {
+            /**
+             * store semi complete results
+             */
+            for (int index = 0; index < partResults; index++) {
                 Integer num = random.nextInt(5);
                 System.out.println(thisThreadName + ": Calculating! Final result - " + num);
                 partialResult.add(num);
@@ -35,55 +36,56 @@ public class CyclicBarrierDemo {
                 System.out.println(thisThreadName + " waiting for remaining threads.");
                 cyclicBarrier.await();
             } catch (InterruptedException e) {
-                // ...
             } catch (BrokenBarrierException e) {
-                // ...
             }
         }
     }
 
     class AggregatorThread implements Runnable {
 
+        /**
+         * add the numbers in the partial list
+         */
         @Override
         public void run() {
 
             String thisThreadName = Thread.currentThread().getName();
 
-            System.out.println(
-                    thisThreadName + ": Computing sum of " + workerCount + " workers, having " + semiCompleteResults + " results each.");
+            System.out.println(thisThreadName + ": Computing sum of " + workerCount + " workers, having " + partResults + " results each.");
             int sum = 0;
 
+            /**
+             * tally sum
+             */
             for (List<Integer> threadResult : partialResults) {
-                System.out.print("Adding ");
                 for (Integer partialResult : threadResult) {
-                    System.out.print(partialResult+" ");
                     sum += partialResult;
                 }
-                System.out.println();
             }
+            /**
+             * prints the final sum of thread results
+             */
             System.out.println(thisThreadName + ": Final result = " + sum);
         }
     }
 
     public void runCalculation(int numWorkers, int numberOfSemiCompleteResults) {
-        semiCompleteResults = numberOfSemiCompleteResults;
+        partResults = numberOfSemiCompleteResults;
         workerCount = numWorkers;
 
-        cyclicBarrier = new CyclicBarrier(workerCount, new AggregatorThread());
+        cyclicBarrier = new java.util.concurrent.CyclicBarrier(workerCount, new AggregatorThread());
 
-        System.out.println("Creating " + workerCount
-                + " worker threads to compute "
-                + semiCompleteResults + " partial results each");
+        System.out.println("Creating " + workerCount + " worker threads to compute " + partResults + " partial results each");
 
-        for (int i = 0; i < workerCount; i++) {
+        for (int index = 0; index < workerCount; index++) {
             Thread worker = new Thread(new CalculatingThread());
-            worker.setName("Thread " + i);
+            worker.setName("Thread " + index);
             worker.start();
         }
     }
 
     public static void main(String[] args) {
-        CyclicBarrierDemo demo = new CyclicBarrierDemo();
+        CyclicBarrier demo = new CyclicBarrier();
         demo.runCalculation(3, 2);
     }
 }

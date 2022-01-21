@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  *
- * @author joe
+ * @author Andrew Guerin
  */
 class IntegerObj {
     int value;

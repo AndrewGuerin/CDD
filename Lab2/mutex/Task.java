@@ -7,7 +7,7 @@ package Lab2.mutex;
 
 /**
  *
- * @author joe
+ * @author Andrew Guerin
  */
 public class Task implements Runnable {
 private String name;

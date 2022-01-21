@@ -9,7 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 /**
  *
- * @author joe
+ * @author Andrew Guerin
  */
 class IntegerObj {
 

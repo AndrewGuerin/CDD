@@ -51,18 +51,18 @@ public class Philosopher extends Thread
              *  Philosopher picks up fork
              */
             leftFork.pickUpFork();
-            System.out.println("Philosopher " + (philosopherCount +1) + " picks up left fork.");
+            System.out.println("Philosopher " + (philosopherCount + 1) + " picks up left fork.");
             rightFork.pickUpFork();
-            System.out.println("Philosopher " + (philosopherCount +1) + " picks up right fork.");
+            System.out.println("Philosopher " + (philosopherCount + 1) + " picks up right fork.");
             useFork();
 
             /**
              *  Releases fork when Philosopher is finished
              */
             leftFork.release();
-            System.out.println("Philosopher " + (philosopherCount +1) + " puts down left fork.");
+            System.out.println("Philosopher " + (philosopherCount + 1) + " puts down left fork.");
             rightFork.release();
-            System.out.println("Philosopher " + (philosopherCount +1) + " puts down right fork.");
+            System.out.println("Philosopher " + (philosopherCount + 1) + " puts down right fork.");
         }
     }
 

@@ -7,7 +7,7 @@ package Lab2.atomicInt;
 
 /**
  *
- * @author joe
+ * @author Andrew Guerin
  */
 public class Task implements Runnable {
 private String name;
